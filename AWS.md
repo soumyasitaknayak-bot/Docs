@@ -42,3 +42,54 @@ groups -can only contain users not groups
 users - part of multiple groups
 IAM permission:can be assigned json documents called policies
 least orivilege permissiion
+
+
+
+
+IAM (Identity and Access Management)
+
+policy inheritance:
+Group level : we have added policies here 
+Inline : attached to user , doesn't matter user is in group or not
+
+policy structure :
+IAM policy structure
+
+{
+    "Version": "2012-10-17",
+    "Id": "optional-policy-id",
+    "Statement": [
+        {
+            "Sid": "optional-statement-id",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::123456789012:user/username"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::bucket-name/*"
+            ],
+            "Condition": {
+                "StringEquals": {
+                    "aws:RequestedRegion": "us-east-1"
+                }
+            }
+        }
+    ]
+}
+
+
+Key Components:
+Version (required): Use "2012-10-17" (current policy language version)
+Id (optional): Unique identifier for the policy
+Statement (required): Array of policy statements
+Sid (optional): Statement identifier
+Effect (required): "Allow" or "Deny"
+Principal (required for resource-based policies): Who the policy applies to
+Action (required): List of actions (e.g., "s3:GetObject")
+Resource (required): ARNs the policy applies to
+Condition (optional): Conditions for when the policy applies
+Note: Resource belongs inside each Statement object, not at the root level.
